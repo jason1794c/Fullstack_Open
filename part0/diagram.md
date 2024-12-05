@@ -2,4 +2,4 @@
 ```mermaid
 graph TD
     A[Enter text in textfield] --> B[Click Save]
-    B --> C["POST: h#8203;ttps://fullstackexampleapp.herokuapp.com/new_note"]
+    B --> C["POST: h#8204;ttps://fullstackexampleapp.herokuapp.com/new_note"]
