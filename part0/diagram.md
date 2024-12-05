@@ -1,7 +1,7 @@
+<!-- This mermaid diagram is for Exercise 0.4 -->
 ```mermaid
 graph TD
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Do something]
-    B -->|No| D[Do something else]
-    C --> E[End]
-    D --> E
+    participant Server
+
+    A[Enter text in textfield] --> B[Click Save]
+    B --> Server[POST https://fullstack-exampleapp.herokuapp.com/new_note]
