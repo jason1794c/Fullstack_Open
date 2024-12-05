@@ -3,4 +3,4 @@
 graph TD
     A[Enter text in textfield] --> B[Click Save]
     B --> C[POST]
-    C --> |https://fullstack-exampleapp.herokuapp.com/new_note|
+    C --> |"https://fullstack-exampleapp.herokuapp.com/new_note"|
