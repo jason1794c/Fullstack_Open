@@ -15,5 +15,5 @@ graph TD
     F --> G["Server GET: https://studies.cs.helsinki.fi/exampleapp/data.json"]
     G --> H[Enter text in Textfield]
     H --> I{Click Save}
-    I |Clicked Save| --> B
+    I --> |Clicked Save| B
  
