@@ -1,10 +1,12 @@
-const Total = ({parts}) => {
+const Total = ({ parts }) => {
+    const sumOfExercises = parts.reduce((sum, currentVal) => {
+        return sum + currentVal.exercises;
+    }, 0);
+    
     return (
-        <>
-            <p>
-                Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}
-            </p>
-        </>
+        <p>
+            <strong>total of {sumOfExercises} exericses</strong>
+        </p>
     );
 };
 
