@@ -35,7 +35,7 @@ function App() {
                 setVotes(copyVotes);
 
                 // Determine the anecdote with the most votes
-                setMostVotesAnec(anecdotes[Object.keys(copyVotes).reduce((a, b) => copyVotes[a] > copyVotes[b] ? a : b)]);
+                setMostVotesAnec(anecdotes[Object.keys(copyVotes).reduce((maxIdx, currentIdx) => copyVotes[maxIdx] > copyVotes[currentIdx] ? maxIdx : currentIdx)]);
             };
         }
     };
