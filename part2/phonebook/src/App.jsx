@@ -31,7 +31,11 @@ function App() {
             return alert("Please enter a name or phone number");
         }
 
-        const tempInfo = [...persons, { name: newName, number: newNumber, id: persons.length + 1 }];
+        // Adding the new person to db
+        const newPerson = { name: newName, number: newNumber, id: persons.length + 1 };
+        addPerson(newPerson);
+
+        const tempInfo = [...persons, newPerson];
         setPersons(tempInfo);
         setFilteredPersons(tempInfo);
         setNewName("");
