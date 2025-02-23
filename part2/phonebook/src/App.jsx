@@ -36,9 +36,13 @@ function App() {
 
         do {
             id = Math.floor(Math.random() * 10000 + 1);
-        } while (persons.some(person => person.id === id));
+        } while (persons.some((person) => person.id === id));
 
-        const newPerson = { name: newName, number: newNumber, id: id.toString()};
+        const newPerson = {
+            name: newName,
+            number: newNumber,
+            id: id.toString(),
+        };
         addPerson(newPerson);
 
         const tempInfo = [...persons, newPerson];
@@ -61,26 +65,37 @@ function App() {
     const onChangeFunctions = {
         name: handleName,
         number: handleNumber,
-    }
+    };
 
     const handleFilterChange = (event) => {
         const tempFilter = event.target.value;
-        const tempPersons = persons.filter((person) => person.name.toLowerCase().includes(tempFilter.toLowerCase()));
+        const tempPersons = persons.filter((person) =>
+            person.name.toLowerCase().includes(tempFilter.toLowerCase())
+        );
 
         setFilterInput(tempFilter);
         setFilteredPersons(tempPersons);
-    }
+    };
 
-    const handleDelete = person => {
-        deletePerson(person);
-    }
+    const handleDelete = (person) => {
+        if (window.confirm("Delete " + person.name + "?")) {
+            deletePerson(person);
+        }
+    };
 
     return (
         <div>
             <h2>Phonebook</h2>
-            <Filter filterInput={filterInput} handleFilterChange={handleFilterChange} />
+            <Filter
+                filterInput={filterInput}
+                handleFilterChange={handleFilterChange}
+            />
             <h2>Add a New</h2>
-            <PersonForm value={{ name: newName, number: newNumber }} onChange={onChangeFunctions} onSubmit={addInfo} />
+            <PersonForm
+                value={{ name: newName, number: newNumber }}
+                onChange={onChangeFunctions}
+                onSubmit={addInfo}
+            />
             <h2>Numbers</h2>
             <Persons persons={filteredPersons} handleDelete={handleDelete} />
         </div>
