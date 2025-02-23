@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAll, addPerson } from "./services/persons";
+import { getAll, addPerson, deletePerson } from "./services/persons";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
 import Filter from "./Filter";
@@ -16,7 +16,7 @@ function App() {
             setPersons(data);
             setFilteredPersons(data);
         });
-    }, []);
+    }, [persons]);
 
     const addInfo = (event) => {
         event.preventDefault();
@@ -32,7 +32,13 @@ function App() {
         }
 
         // Adding the new person to db
-        const newPerson = { name: newName, number: newNumber, id: persons.length + 1 };
+        let id;
+
+        do {
+            id = Math.floor(Math.random() * 10000 + 1);
+        } while (persons.some(person => person.id === id));
+
+        const newPerson = { name: newName, number: newNumber, id: id.toString()};
         addPerson(newPerson);
 
         const tempInfo = [...persons, newPerson];
@@ -65,6 +71,10 @@ function App() {
         setFilteredPersons(tempPersons);
     }
 
+    const handleDelete = person => {
+        deletePerson(person);
+    }
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -72,7 +82,7 @@ function App() {
             <h2>Add a New</h2>
             <PersonForm value={{ name: newName, number: newNumber }} onChange={onChangeFunctions} onSubmit={addInfo} />
             <h2>Numbers</h2>
-            <Persons persons={filteredPersons} />
+            <Persons persons={filteredPersons} handleDelete={handleDelete} />
         </div>
     );
 }
