@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getAll, addPerson } from "./services/persons";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
 import Filter from "./Filter";
@@ -9,6 +10,13 @@ function App() {
     const [newNumber, setNewNumber] = useState("");
     const [filteredPersons, setFilteredPersons] = useState([...persons]);
     const [filterInput, setFilterInput] = useState("");
+
+    useEffect(() => {
+        getAll().then((data) => {
+            setPersons(data);
+            setFilteredPersons(data);
+        });
+    }, []);
 
     const addInfo = (event) => {
         event.preventDefault();
