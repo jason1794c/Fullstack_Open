@@ -3,10 +3,10 @@ const Persons = ({ persons, handleDelete }) => {
         <div>
             {persons.map((person) => (
                 <div key={person.id}>
-                    <p style={{ margin: 0 }}>
+                    <p style={{ margin: 0, display: "inline" }}>
                         {person.name + " " + person.number}
                     </p>
-                    <button type="button" onClick={() => handleDelete(person)}>
+                    <button type="button" onClick={() => handleDelete(person)} style={{display: "inline", margin: "10px" }}>
                         Delete
                     </button>
                 </div>
