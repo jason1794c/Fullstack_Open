@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { getAll, addPerson, deletePerson } from "./services/persons";
+import {
+    getAll,
+    addPerson,
+    deletePerson,
+    updateNumber,
+} from "./services/persons";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
 import Filter from "./Filter";
@@ -16,38 +21,52 @@ function App() {
             setPersons(data);
             setFilteredPersons(data);
         });
-    }, [persons]);
+    }, []);
 
     const addInfo = (event) => {
         event.preventDefault();
-
-        for (let person of persons) {
-            if (person.name === newName) {
-                return alert(`${newName} is already added to phonebook`);
-            }
-        }
+        let tempInfo = [];
 
         if (newNumber.length === 0 || newName.length === 0) {
             return alert("Please enter a name or phone number");
         }
 
-        // Adding the new person to db
-        let id;
+        if (persons.some((person) => person.name === newName)) {
+            if (
+                window.confirm(
+                    `${newName} is already added to phonebook, replace the old number with a new one?`
+                )
+            ) {
+                persons.forEach((person) => {
+                    if (person.name === newName) {
+                        updateNumber(person, newNumber);
+                    }
+                });
+                tempInfo = [...persons];
+            }
+        } else {
+            // Adding the new person to db
+            let id;
 
-        do {
-            id = Math.floor(Math.random() * 10000 + 1);
-        } while (persons.some((person) => person.id === id));
+            do {
+                id = Math.floor(Math.random() * 10000 + 1);
+            } while (persons.some((person) => person.id === id));
 
-        const newPerson = {
-            name: newName,
-            number: newNumber,
-            id: id.toString(),
-        };
-        addPerson(newPerson);
+            const newPerson = {
+                name: newName,
+                number: newNumber,
+                id: id.toString(),
+            };
+            addPerson(newPerson);
+            tempInfo = [...persons, newPerson];
+        }
 
-        const tempInfo = [...persons, newPerson];
+        const tempFilteredPersons = persons.filter((person) =>
+            person.name.toLowerCase().includes(filterInput.toLowerCase())
+        );
+        setFilteredPersons(tempFilteredPersons);
+
         setPersons(tempInfo);
-        setFilteredPersons(tempInfo);
         setNewName("");
         setNewNumber("");
     };
@@ -77,9 +96,11 @@ function App() {
         setFilteredPersons(tempPersons);
     };
 
-    const handleDelete = (person) => {
+    const handleDelete = (event, person) => {
+        event.preventDefault();
         if (window.confirm("Delete " + person.name + "?")) {
             deletePerson(person);
+            setPersons([...persons])
         }
     };
 
